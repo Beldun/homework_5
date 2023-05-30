@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
 
-function App() {
+export default function Clicker() {
+  const [clickCount, setClickCount] = useState(0);
+  const [dollars, setDollars] = useState(0);
+
+  const handleClick = () => {
+    setClickCount(prevCount => prevCount + 1);
+    if ((clickCount + 1) % 1000 === 0) {
+      setDollars(prevDollars => prevDollars + 1);
+    }
+  };
+
+  useEffect(() => {
+    document.title = `You have ${dollars}$`
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="clicker-container">
+      <h1 className="clicker-heading">Clicker</h1>
+      <h3 className='clicker-text'>Every 1000 clicks, you efficiency 1 dollar</h3>
+      <button className="clicker-button" onClick={handleClick}>Click me!</button>
+      <p className="clicker-text">Total Clicks: {clickCount}</p>
+      <p className="clicker-text">Total Dollars: ${dollars}</p>
     </div>
   );
-}
+};
 
-export default App;
